@@ -2,14 +2,12 @@ package deepnetts.hotdog;
 
 import deepnetts.core.DeepNetts;
 import deepnetts.data.ImageSet;
-import deepnetts.eval.ClassificationMetrics;
 import deepnetts.net.ConvolutionalNetwork;
 import deepnetts.net.layers.activation.ActivationType;
 import deepnetts.net.train.BackpropagationTrainer;
-import deepnetts.eval.ConfusionMatrix;
 import deepnetts.net.layers.Filter;
+import deepnetts.net.layers.Filters;
 import deepnetts.net.loss.LossType;
-import deepnetts.util.FileIO;
 import deepnetts.util.ImageResize;
 import deepnetts.util.RandomGenerator;
 import java.io.FileNotFoundException;
@@ -33,10 +31,10 @@ import javax.visrec.ml.eval.EvaluationMetrics;
  * @see ImageSet
  * 
  */
-public class HotDogTraining {
+public class BuildAndTrainModel {
 
     static final Logger LOGGER = Logger.getLogger(DeepNetts.class.getName());
-
+ // https://github.com/deepnetts/hotdog-nothotdog
     public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
 
         // path to directory with training images (each category has it's folder)
@@ -52,7 +50,7 @@ public class HotDogTraining {
         // PREPARE DATASET - create image set and init preprocessing
         LOGGER.info("Loading images...");
         ImageSet imageSet = new ImageSet(imageWidth, imageHeight, dataSetPath);
-        imageSet.setResizeStrategy(ImageResize.STRATCH); // zapamti da treba da skaliras slicice
+        imageSet.setResizeStrategy(ImageResize.STRATCH);
         imageSet.setInvertImages(true);
         imageSet.zeroMean();
 
@@ -61,7 +59,7 @@ public class HotDogTraining {
         LOGGER.info("Creating a neural network...");
         ConvolutionalNetwork convNet = ConvolutionalNetwork.builder()
                 .addInputLayer(imageWidth, imageHeight, 3)
-                .addConvolutionalLayer(3, Filter.ofSize(3))
+                .addConvolutionalLayer(3, Filters.ofSize(3))
                 .addMaxPoolingLayer(2, 2)
                 .addFullyConnectedLayer(32)
                 .addOutputLayer(1, ActivationType.SIGMOID)

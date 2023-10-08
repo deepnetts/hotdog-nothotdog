@@ -9,12 +9,7 @@ import javax.imageio.ImageIO;
 import javax.visrec.ml.classification.ImageClassifier;
 import javax.visrec.ri.ml.classification.ImageClassifierNetwork;
 
-// image dir da bude prvi parametar u konstruktoru, i da ukinem index i labels file
-// skaliraj slike prilikom prepoznavanja
-// direktorijum sa slikama da bude prvi parametar , izbaci ucitavanje fajlova i labela - samo dir
-// remove log4j from visrec, stavi dependency na ri 1.0.4 ane na 1.0.3
-
-public class HotDotRecognition {
+public class UseTrainedModel {
     
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         
